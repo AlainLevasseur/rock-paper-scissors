@@ -74,6 +74,14 @@ function game() {
     let computerSelection;
     //round result variable
     let roundResult;
+    //game result variable
+    let gameResult;
+    //player score variable
+    let playerScore = 0;
+    //computer score variable
+    let computerScore = 0;
+    //tie count variable
+    let numTies = 0
 
     //Play 5 rounds
     for(let i = 0; i < 5; i++){
@@ -86,11 +94,15 @@ function game() {
         //Output Round result
         console.log(`Round ${i + 1}: ${getRoundResultMessage(roundResult, playerSelection, computerSelection)}`);
         //Update Score
-
+        if (roundResult === "tie") {
+            numTies++;
+        } else {
+            roundResult === "win" ? ++playerScore : ++computerScore;
+        }
     }
-
     //Report winner
-
+    playerScore > computerScore ? gameResult = "won" : gameResult = "lost";
+    console.log(`You ${gameResult}! With a score of ${playerScore}-${computerScore} and ${numTies} ties`)
 }
+
 game();
-//console.log(playRound("roCK", getComputerChoice()));
