@@ -14,17 +14,34 @@ function getComputerChoice() {
 }
 
 function getPlayerChoice() {
-    return getComputerChoice();
+    //make player selection variable
+    let playerSelection;
+    //make player choice validity variable
+    let isValidChoice;
+
+    //get player choice
+    do {
+        playerSelection = prompt("Rock, Paper or Scissors?")
+        //check validity of player choice
+        playerSelection = playerSelection.toLocaleLowerCase();
+        //set player choice validity variable
+        isValidChoice = playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors";
+    
+    //reobtain player choice if invalid
+    } while (!isValidChoice);
+    
+    //return player choice
+    return playerSelection;
 }
 
 function getRoundResultMessage(roundResult, playerSelection, computerSelection){
         switch (roundResult) {
             case "win":
-                return `You Win! ${playerSelection} beats ${computerSelection}`;
+                return `You Win! Your ${playerSelection} beats ${computerSelection}`;
             case "lose":
-                return `You Lose! ${computerSelection} beats ${playerSelection}`;
+                return `You Lose! ${computerSelection} beats your ${playerSelection}`;
             default:
-                return `Tie! ${playerSelection} ties ${computerSelection}`;
+                return `Tie! Your ${playerSelection} ties ${computerSelection}`;
         }
 }
 
