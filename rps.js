@@ -14,7 +14,18 @@ function getComputerChoice() {
 }
 
 function getPlayerChoice() {
-    return "rock";
+    return getComputerChoice();
+}
+
+function getRoundResultMessage(roundResult, playerSelection, computerSelection){
+        switch (roundResult) {
+            case "win":
+                return `You Win! ${playerSelection} beats ${computerSelection}`;
+            case "lose":
+                return `You Lose! ${computerSelection} beats ${playerSelection}`;
+            default:
+                return `Tie! ${playerSelection} ties ${computerSelection}`;
+        }
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -35,7 +46,7 @@ function playRound(playerSelection, computerSelection) {
                 break;
             //Player -> paper:
             case "paper":
-                //Compare against computer selection
+                //Compare against computer selection 
                 //CPU -> Rock: win, Scissors: lose
                 computerSelection === "rock" ? roundResult = "win" : roundResult = "lose";
                 break;
@@ -45,22 +56,12 @@ function playRound(playerSelection, computerSelection) {
                 //CPU -> Paper: win, Rock: lose
                 computerSelection === "paper" ? roundResult = "win" : roundResult = "lose";
                 break;
+            //Player -> invalid choice:
             default:
                 console.warn("Invalid player selection!");
                 roundResult =  "Error!"
             }
-    }
-    //output round result message
-    switch (roundResult) {
-        case "win":
-            console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
-            break;
-        case "lose":
-            console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
-            break;
-        default:
-            console.log(`Tie! ${playerSelection} ties ${computerSelection}`);
-    }
+        }
 
     //return round result
     return roundResult;
@@ -77,15 +78,19 @@ function game() {
     //Play 5 rounds
     for(let i = 0; i < 5; i++){
         //Get Player Selection
-        playerSelection = "roCk";
+        playerSelection = getPlayerChoice();
         //Get Computer Selection
         computerSelection = getComputerChoice();
         //Get Round result
         roundResult = playRound(playerSelection, computerSelection);
+        //Output Round result
+        console.log(`Round ${i + 1}: ${getRoundResultMessage(roundResult, playerSelection, computerSelection)}`);
         //Update Score
 
-        //Report winner
     }
-}
 
-console.log(playRound("roCK", getComputerChoice()));
+    //Report winner
+
+}
+game();
+//console.log(playRound("roCK", getComputerChoice()));
