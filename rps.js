@@ -23,7 +23,7 @@ function getPlayerChoice() {
     do {
         playerSelection = prompt("Rock, Paper or Scissors?")
         //check validity of player choice
-        playerSelection = playerSelection.toLocaleLowerCase();
+        playerSelection = playerSelection === null ? "invalid choice" : playerSelection.toLocaleLowerCase();
         //set player choice validity variable
         isValidChoice = playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors";
     
