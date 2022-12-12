@@ -4,17 +4,18 @@ let computerScore = 0;
 let numTies = 0
 let numRounds = 0;
 
-
-
 const rockBtn = document.querySelector('#rock');
 const paperBtn = document.querySelector('#paper');
 const scissorsBtn = document.querySelector('#scissors');
 
 const scoreBoard = document.querySelector('.score');
+const roundInfo = document.querySelector('.round-info');
 
 rockBtn.addEventListener('click', () => playRound("rock", getComputerChoice()));
 paperBtn.addEventListener('click', () => playRound("paper", getComputerChoice()));
 scissorsBtn.addEventListener('click', () => playRound("scissors", getComputerChoice()));
+
+showScore();
 
 
 function getComputerChoice() {
@@ -32,40 +33,20 @@ function getComputerChoice() {
     }
 }
 
-function getPlayerChoice() {
-    //make player selection variable
-    let playerSelection;
-    //make player choice validity variable
-    let isValidChoice;
-
-    //get player choice
-    do {
-        playerSelection = prompt("Rock, Paper or Scissors?")
-        //check validity of player choice
-        playerSelection = playerSelection === null ? "invalid choice" : playerSelection.toLocaleLowerCase();
-        //set player choice validity variable
-        isValidChoice = playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors";
-    
-    //reobtain player choice if invalid
-    } while (!isValidChoice);
-    
-    //return player choice
-    return playerSelection;
-}
-
-function getRoundResultMessage(roundResult, playerSelection, computerSelection){
+function getRoundResultMessage(winner, playerSelection, computerSelection){
         let message = `Round ${numRounds}: `
-        switch (roundResult) {
-            case "win":
+        switch (winner) {
+            case "player":
                 message += `You Win! Your ${playerSelection} beats ${computerSelection}`;
-            case "lose":
+            case "CPU":
                 message += `You Lose! ${computerSelection} beats your ${playerSelection}`;
             default:
                 message += `Tie! Your ${playerSelection} ties ${computerSelection}`;
         }
+        alert("RoundResultMessage not shown!");
 }
 
-function getWinner(playerSelection, computerSelection) {
+function getRoundWinner(playerSelection, computerSelection) {
     //check for ties
     if(playerSelection === computerSelection) {
         return "tie";
@@ -80,20 +61,24 @@ function getWinner(playerSelection, computerSelection) {
 }
 
 function playRound(playerSelection, computerSelection) {
-    //declare round result
-    let roundResult = getWinner(playerSelection, computerSelection);
-    console.log(roundResult);
-    updateScore(roundResult);
-    getRoundResultMessage(roundResult, playerSelection, computerSelection);
+    let winner = getRoundWinner(playerSelection, computerSelection);
+    updateScore(winner);
+    let roundMessage = getRoundResultMessage(winner, playerSelection, computerSelection);
+
 }
 
-function updateScore(roundResult) {
+function updateScore(winner) {
     //Update Score
-    if (roundResult === "tie") {
+    if (winner === "tie") {
         numTies++;
     } else {
-        roundResult === "win" ? ++playerScore : ++computerScore;
+        winner === "player" ? ++playerScore : ++computerScore;
     }
+    showScore();
+}
+
+function showScore(){
+    scoreBoard.innerText = `Score\nPlayer: ${playerScore} * CPU: ${computerScore} * Ties: ${numTies}`;
 }
 
 function game() {
