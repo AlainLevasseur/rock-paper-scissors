@@ -3,7 +3,7 @@ const scoreBoard = document.querySelector('.score');
 let playerScore;
 let computerScore;
 let tieCount;
-const roundInfo = document.querySelector('.round-info');
+const history = document.querySelector('.history');
 let roundCount;
 
 //Game Settings
@@ -44,6 +44,7 @@ function playRound(playerSelection, computerSelection) {
     let winner = getRoundWinner(playerSelection, computerSelection);
     updateScore(winner);
     showRoundResult(winner, playerSelection, computerSelection);
+    checkVictory();
 }
 
 function getRoundWinner(playerSelection, computerSelection) {
@@ -86,7 +87,20 @@ function showRoundResult(winner, playerSelection, computerSelection) {
             message += `Tie! Your ${playerSelection} ties ${computerSelection}`;
     }
     //Most recent round info added to the top
-    roundInfo.textContent = message + "\n" + roundInfo.textContent;
+    history.innerHTML = message + "\n" + history.innerHTML;
+}
+
+function checkVictory() {
+    if(playerScore === MAX_SCORE) { 
+        showGameEnd('Victory'); 
+    } else if(computerScore === MAX_SCORE) { 
+        showGameEnd('Defeat');
+    }
+}
+
+function showGameEnd(ending) {
+    history.innerHTML = `<span class='${ending}'>${ending}! Your score: ${playerScore}W ${computerScore}L ${tieCount}T</span>\n` + history.innerHTML;
+    newGame();
 }
 
 function getComputerChoice() {
