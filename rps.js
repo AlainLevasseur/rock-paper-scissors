@@ -28,15 +28,15 @@ function addPlayerChoices() {
 }
 
 function playRock() {
-    playRound("rock", getComputerChoice());
+    playRound("Rock", getComputerChoice());
 }
 
 function playPaper() {
-    playRound("paper", getComputerChoice());
+    playRound("Paper", getComputerChoice());
 }
 
 function playScissors() {
-    playRound("scissors", getComputerChoice());
+    playRound("Scissors", getComputerChoice());
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -51,9 +51,9 @@ function getRoundWinner(playerSelection, computerSelection) {
     if(playerSelection === computerSelection) {
         return "tie";
     //check for win
-    } else if ( playerSelection === "rock" && computerSelection === "scissors" ||
-                playerSelection === "paper" && computerSelection === "rock" || 
-                playerSelection === "scissors" && computerSelection === "paper") {
+    } else if ( playerSelection === "Rock" && computerSelection === "Scissors" ||
+                playerSelection === "Paper" && computerSelection === "Rock" || 
+                playerSelection === "Scissors" && computerSelection === "Paper") {
         return "player";
     } else {
         return "CPU";
@@ -94,11 +94,11 @@ function getComputerChoice() {
 
     switch (choice) {
         case 0:
-            return "rock";
+            return "Rock";
         case 1:
-            return "paper"; 
+            return "Paper"; 
         case 2:
-            return "scissors";
+            return "Scissors";
         default:
             console.warn("getComputerChoice switch logic is wrong! Choice value: " + choice);
     }
