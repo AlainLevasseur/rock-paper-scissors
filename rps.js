@@ -2,7 +2,7 @@
 let playerScore = 0;
 let computerScore = 0;
 let numTies = 0
-let numRounds = 0;
+let roundNumber = 1;
 
 const rockBtn = document.querySelector('#rock');
 const paperBtn = document.querySelector('#paper');
@@ -16,7 +16,6 @@ paperBtn.addEventListener('click', () => playRound("paper", getComputerChoice())
 scissorsBtn.addEventListener('click', () => playRound("scissors", getComputerChoice()));
 
 showScore();
-
 
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 3);
@@ -33,17 +32,11 @@ function getComputerChoice() {
     }
 }
 
-function getRoundResultMessage(winner, playerSelection, computerSelection){
-        let message = `Round ${numRounds}: `
-        switch (winner) {
-            case "player":
-                message += `You Win! Your ${playerSelection} beats ${computerSelection}`;
-            case "CPU":
-                message += `You Lose! ${computerSelection} beats your ${playerSelection}`;
-            default:
-                message += `Tie! Your ${playerSelection} ties ${computerSelection}`;
-        }
-        alert("RoundResultMessage not shown!");
+function playRound(playerSelection, computerSelection) {
+    let winner = getRoundWinner(playerSelection, computerSelection);
+    updateScore(winner);
+    showRoundResult(winner, playerSelection, computerSelection);
+    roundNumber++;
 }
 
 function getRoundWinner(playerSelection, computerSelection) {
@@ -60,15 +53,7 @@ function getRoundWinner(playerSelection, computerSelection) {
     }
 }
 
-function playRound(playerSelection, computerSelection) {
-    let winner = getRoundWinner(playerSelection, computerSelection);
-    updateScore(winner);
-    let roundMessage = getRoundResultMessage(winner, playerSelection, computerSelection);
-
-}
-
 function updateScore(winner) {
-    //Update Score
     if (winner === "tie") {
         numTies++;
     } else {
@@ -78,7 +63,22 @@ function updateScore(winner) {
 }
 
 function showScore(){
-    scoreBoard.innerText = `Score\nPlayer: ${playerScore} * CPU: ${computerScore} * Ties: ${numTies}`;
+    scoreBoard.textContent = `Score\nPlayer: ${playerScore} * CPU: ${computerScore} * Ties: ${numTies}`;
+}
+
+function showRoundResult(winner, playerSelection, computerSelection){
+    let message = `Round ${roundNumber}: `
+    switch (winner) {
+        case "player":
+            message += `You Win! Your ${playerSelection} beats ${computerSelection}`;
+            break;
+        case "CPU":
+            message += `You Lose! ${computerSelection} beats your ${playerSelection}`;
+            break;
+        default:
+            message += `Tie! Your ${playerSelection} ties ${computerSelection}`;
+    }
+    roundInfo.textContent = message + "\n" + roundInfo.textContent;
 }
 
 function game() {
