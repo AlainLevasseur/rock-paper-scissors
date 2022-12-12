@@ -1,11 +1,16 @@
+
 let playerScore = 0;
 let computerScore = 0;
 let numTies = 0
 let numRounds = 0;
 
+
+
 const rockBtn = document.querySelector('#rock');
 const paperBtn = document.querySelector('#paper');
 const scissorsBtn = document.querySelector('#scissors');
+
+const scoreBoard = document.querySelector('.score');
 
 rockBtn.addEventListener('click', () => playRound("rock", getComputerChoice()));
 paperBtn.addEventListener('click', () => playRound("paper", getComputerChoice()));
@@ -49,53 +54,37 @@ function getPlayerChoice() {
 }
 
 function getRoundResultMessage(roundResult, playerSelection, computerSelection){
+        let message = `Round ${numRounds}: `
         switch (roundResult) {
             case "win":
-                return `You Win! Your ${playerSelection} beats ${computerSelection}`;
+                message += `You Win! Your ${playerSelection} beats ${computerSelection}`;
             case "lose":
-                return `You Lose! ${computerSelection} beats your ${playerSelection}`;
+                message += `You Lose! ${computerSelection} beats your ${playerSelection}`;
             default:
-                return `Tie! Your ${playerSelection} ties ${computerSelection}`;
+                message += `Tie! Your ${playerSelection} ties ${computerSelection}`;
         }
+}
+
+function getWinner(playerSelection, computerSelection) {
+    //check for ties
+    if(playerSelection === computerSelection) {
+        return "tie";
+    //check for wins
+    } else  if (playerSelection === "rock" && computerSelection === "scissors" ||
+                playerSelection === "paper" && computerSelection === "rock" || 
+                playerSelection === "scissors" && computerSelection === "paper") {
+        return "player";
+    } else {
+        return "CPU";
+    }
 }
 
 function playRound(playerSelection, computerSelection) {
     //declare round result
-    let roundResult
-
-    //check for ties
-    if(playerSelection.toLowerCase() === computerSelection) {
-        roundResult = "tie";
-    } else {
-        //check for wins
-        switch( playerSelection.toLowerCase() ) {
-            //Player -> rock: 
-            case "rock":
-                //Compare against computer selection
-                //CPU -> Scissors: win, Paper: lose
-                computerSelection === "scissors" ? roundResult = "win" : roundResult = "lose";
-                break;
-            //Player -> paper:
-            case "paper":
-                //Compare against computer selection 
-                //CPU -> Rock: win, Scissors: lose
-                computerSelection === "rock" ? roundResult = "win" : roundResult = "lose";
-                break;
-            //Player -> scissors:
-            case "scissors":
-                //Compare against computer selection
-                //CPU -> Paper: win, Rock: lose
-                computerSelection === "paper" ? roundResult = "win" : roundResult = "lose";
-                break;
-            //Player -> invalid choice:
-            default:
-                console.warn("Invalid player selection!");
-                roundResult =  "Error!"
-            }
-        }
-    console.log(`played: ${playerSelection}`)
-    //return round result
-    return roundResult;
+    let roundResult = getWinner(playerSelection, computerSelection);
+    console.log(roundResult);
+    updateScore(roundResult);
+    getRoundResultMessage(roundResult, playerSelection, computerSelection);
 }
 
 function updateScore(roundResult) {
@@ -108,29 +97,8 @@ function updateScore(roundResult) {
 }
 
 function game() {
-    //player selection variable
-    let playerSelection;
-    //computer selection variable
-    let computerSelection;
-    //round result variable
-    let roundResult;
-    //game result variable
-    let gameResult;
 
-    //Play 5 rounds
-    for(let i = 0; i < numRounds; i++){
-        //Get Player Selection
-        playerSelection = getPlayerChoice();
-        //Get Computer Selection
-        computerSelection = getComputerChoice();
-        //Get Round result
-        roundResult = playRound(playerSelection, computerSelection);
-        //Output Round result
-        console.log(`Round ${i + 1}: ${getRoundResultMessage(roundResult, playerSelection, computerSelection)}`);
-    }
     //Report winner
     playerScore > computerScore ? gameResult = "won" : gameResult = "lost";
     console.log(`You ${gameResult}! With a score of ${playerScore}-${computerScore} and ${numTies} ties`)
 }
-
-game();
