@@ -1,3 +1,17 @@
+let playerScore = 0;
+let computerScore = 0;
+let numTies = 0
+let numRounds = 0;
+
+const rockBtn = document.querySelector('#rock');
+const paperBtn = document.querySelector('#paper');
+const scissorsBtn = document.querySelector('#scissors');
+
+rockBtn.addEventListener('click', () => playRound("rock", getComputerChoice()));
+paperBtn.addEventListener('click', () => playRound("paper", getComputerChoice()));
+scissorsBtn.addEventListener('click', () => playRound("scissors", getComputerChoice()));
+
+
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 3);
 
@@ -79,9 +93,18 @@ function playRound(playerSelection, computerSelection) {
                 roundResult =  "Error!"
             }
         }
-
+    console.log(`played: ${playerSelection}`)
     //return round result
     return roundResult;
+}
+
+function updateScore(roundResult) {
+    //Update Score
+    if (roundResult === "tie") {
+        numTies++;
+    } else {
+        roundResult === "win" ? ++playerScore : ++computerScore;
+    }
 }
 
 function game() {
@@ -93,15 +116,9 @@ function game() {
     let roundResult;
     //game result variable
     let gameResult;
-    //player score variable
-    let playerScore = 0;
-    //computer score variable
-    let computerScore = 0;
-    //tie count variable
-    let numTies = 0
 
     //Play 5 rounds
-    for(let i = 0; i < 5; i++){
+    for(let i = 0; i < numRounds; i++){
         //Get Player Selection
         playerSelection = getPlayerChoice();
         //Get Computer Selection
@@ -110,12 +127,6 @@ function game() {
         roundResult = playRound(playerSelection, computerSelection);
         //Output Round result
         console.log(`Round ${i + 1}: ${getRoundResultMessage(roundResult, playerSelection, computerSelection)}`);
-        //Update Score
-        if (roundResult === "tie") {
-            numTies++;
-        } else {
-            roundResult === "win" ? ++playerScore : ++computerScore;
-        }
     }
     //Report winner
     playerScore > computerScore ? gameResult = "won" : gameResult = "lost";
