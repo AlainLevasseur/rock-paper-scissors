@@ -1,3 +1,67 @@
 .results {
     white-space: pre-wrap;
 }
+
+h1, .score {
+    text-align: center;
+}
+
+.button-container {
+    display: flex;
+    gap: 55px;
+    justify-content: center;
+}
+
+button {
+    font-size: 18px;
+    width: 97px;
+    height: 60px;
+    border-radius: 25%;
+}
+
+button:hover {
+    background-color: bisque;
+}
+
+#rock:hover {
+    cursor: grabbing;
+}
+
+#paper:hover {
+    cursor: grab;
+}
+
+#scissors:hover {
+    cursor: pointer;
+}
+
+.score {
+    font-size: 18px;
+}
+
+.history {
+    height: 180px;
+    width: 400px;
+    overflow-y: auto;
+    margin: 0 auto;
+}
+
+.win {
+    background-color: aquamarine;
+}
+
+.loss {
+    background-color: lightpink;
+}
+
+.tie {
+    background-color: white;
+}
+
+.Victory {
+    background-color: greenyellow;
+}
+
+.Defeat {
+    background-color: tomato;
+}

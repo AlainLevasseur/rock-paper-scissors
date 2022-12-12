@@ -75,19 +75,19 @@ function showScore() {
 }
 
 function showRoundResult(winner, playerSelection, computerSelection) {
-    let message = `Round ${roundCount}: `;
+    let message = `Round ${roundCount}: <span class='`;
     switch (winner) {
         case "player":
-            message += `You Win! Your ${playerSelection} beats ${computerSelection}`;
+            message += `win'>You Win! Your ${playerSelection} beats ${computerSelection}`;
             break;
         case "CPU":
-            message += `You Lose! ${computerSelection} beats your ${playerSelection}`;
+            message += `loss'>You Lose! ${computerSelection} beats your ${playerSelection}`;
             break;
         default:
-            message += `Tie! Your ${playerSelection} ties ${computerSelection}`;
+            message += `tie'>Tie! Your ${playerSelection} ties ${computerSelection}`;
     }
     //Most recent round info added to the top
-    history.innerHTML = message + "\n" + history.innerHTML;
+    history.innerHTML = message + "</span>\n" + history.innerHTML;
 }
 
 function checkVictory() {
